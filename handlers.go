@@ -53,7 +53,7 @@ func UpdateClientProfile(w http.ResponseWriter, r *http.Request){
 	// update profile
 	clientProfile.Email = payLoadData.Email
 	clientProfile.Name  = payLoadData.Name
-	clientProfile.Id    = clientProfile
+	clientProfile.Id    = payLoadData.Id
 
 	w.WriteHeader(http.StatusOK)
 }
