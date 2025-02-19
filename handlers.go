@@ -17,15 +17,7 @@ func handleClientProfile(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetClientProfile(w http.ResponseWriter, r *http.Request){
-	var clientId = r.URL.Query().Get("clientId")
-	clientProfile, ok:= database[clientId]
-	if !ok || clientId == ""{
-		http.Error(w, "Forbidden", http.StatusForbidden)
-		return
-	}
-
-	w.Header().Set("Content-type", "application/json")
-
+	clientProfile := r.Context().Value("clientProfile").(ClientProfile)
 	response := ClientProfile{
 		Email: clientProfile.Email,
 		Name: clientProfile.Name,
@@ -35,12 +27,8 @@ func GetClientProfile(w http.ResponseWriter, r *http.Request){
 
 }
 func UpdateClientProfile(w http.ResponseWriter, r *http.Request){
-	var clientId = r.URL.Query().Get("clientId")
-	clientProfile, ok:= database[clientId]
-	if !ok || clientId == ""{
-		http.Error(w, "Forbidden", http.StatusForbidden)
-		return
-	}
+	clientProfile := r.Context().Value("clientProfile").(ClientProfile)
+
 
 	//Decode the json paylaod directly into the struct
 	var payLoadData ClientProfile
